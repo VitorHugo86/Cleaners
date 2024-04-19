@@ -26,7 +26,3 @@ This script is designed to work on Windows operating systems.
 ## Contributing
 
 If you encounter any issues with the script or have suggestions for improvement, feel free to open an issue or submit a pull request on this repository.
-
-## License
-
-This script is released under the [MIT License](LICENSE).
