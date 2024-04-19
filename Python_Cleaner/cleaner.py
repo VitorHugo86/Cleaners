@@ -6,9 +6,9 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 class PythonCleaner:
-    def __init__(self, diretorios_alvo, extensoes_temporarias):
-        self.diretorios_alvo = diretorios_alvo
-        self.extensoes_temporarias = extensoes_temporarias
+    def __init__(self, target_directories, temporary_extensions):
+        self.target_directories = target_directories
+        self.temporary_extensions = temporary_extensions
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
 
@@ -20,66 +20,63 @@ class PythonCleaner:
         time.sleep(3)
         print('\nCleaning .................')
 
-    def limpar_arquivos_temporarios(self):
+    def clean_temporary_files(self):
         """
-        Limpa arquivos temporários dos diretórios alvo.
+        Cleans temporary files from the target directories.
         """
-        for diretorio_alvo in self.diretorios_alvo:
+        for target_directory in self.target_directories:
             try:
-                with os.scandir(diretorio_alvo) as it:
-                    for entrada in it:
-                        if entrada.is_file() and entrada.name.endswith(tuple(self.extensoes_temporarias)):
-                            caminho_arquivo = os.path.join(diretorio_alvo, entrada.name)
+                with os.scandir(target_directory) as it:
+                    for entry in it:
+                        if entry.is_file() and entry.name.endswith(tuple(self.temporary_extensions)):
+                            file_path = os.path.join(target_directory, entry.name)
                             try:
-                                os.remove(caminho_arquivo)
-                                print(f"Arquivo removido: {caminho_arquivo}")
-                                self.logger.info(f"Arquivo removido: {caminho_arquivo}")
+                                os.remove(file_path)
+                                print(f"File removed: {file_path}")
+                                self.logger.info(f"File removed: {file_path}")
                             except Exception as e:
-                                print(f"Não foi possível remover o arquivo {caminho_arquivo}: {e}")
-                                self.logger.error(f"Não foi possível remover o arquivo {caminho_arquivo}: {e}")
+                                print(f"Failed to remove file {file_path}: {e}")
+                                self.logger.error(f"Failed to remove file {file_path}: {e}")
             except Exception as e:
-                print(f"Erro ao limpar diretório {diretorio_alvo}: {e}")
-                self.logger.error(f"Erro ao limpar diretório {diretorio_alvo}: {e}")
+                print(f"Error cleaning directory {target_directory}: {e}")
+                self.logger.error(f"Error cleaning directory {target_directory}: {e}")
 
-    def limpar_cache_chrome(self):
+    def clean_chrome_cache(self):
         try:
             chrome = Chrome()
             chrome.clear_cache()
             chrome.close()
-            print("Cache do Google Chrome limpo.")
+            print("Google Chrome cache cleared.")
         except Exception as e:
-            print(f"Erro ao limpar o cache do Google Chrome: {e}")
+            print(f"Error clearing Google Chrome cache: {e}")
 
-    def limpar_cookies_firefox(self):
+    def clean_firefox_cookies(self):
         try:
             options = FirefoxOptions()
-            options.headless = True  # Executa o navegador em modo headless (sem interface gráfica)
+            options.headless = True  # Run the browser in headless mode (no GUI)
             driver = webdriver.Firefox(options=options)
-            driver.get('about:preferences#privacy')  # Abre as configurações de privacidade do Firefox
-            driver.find_element_by_id('clearOnClose-checkbox').click()  # Marca a opção de limpar cookies ao fechar
-            driver.find_element_by_id('clearOnClose-checkbox').click()  # Desmarca a opção para garantir que esteja desmarcada
-            driver.find_element_by_id('cookieExceptions').click()  # Abre as exceções de cookies
-            driver.find_element_by_id('clearButton').click()  # Clica no botão para limpar todos os cookies
+            driver.get('about:preferences#privacy')  # Open Firefox privacy settings
+            driver.find_element_by_id('clearOnClose-checkbox').click()  # Check the option to clear cookies on close
+            driver.find_element_by_id('clearOnClose-checkbox').click()  # Uncheck the option to ensure it's unchecked
+            driver.find_element_by_id('cookieExceptions').click()  # Open cookie exceptions
+            driver.find_element_by_id('clearButton').click()  # Click the button to clear all cookies
             driver.close()
-            print("Cookies do Mozilla Firefox limpos.")
+            print("Mozilla Firefox cookies cleared.")
         except Exception as e:
-            print(f"Erro ao limpar os cookies do Mozilla Firefox: {e}")
+            print(f"Error clearing Mozilla Firefox cookies: {e}")
 
 def main():
-    diretorios_alvo = [
-        "C:\\Windows\\Temp",  # Diretório temporário no Windows
-        os.path.join(os.getenv('APPDATA'), 'Local', 'Temp')  # Diretório temporário local do usuário
+    target_directories = [
+        "C:\\Windows\\Temp",  # Windows temporary directory
+        os.path.join(os.getenv('APPDATA'), 'Local', 'Temp')  # User's local temporary directory
     ]
-    extensoes_temporarias = ['.tmp', '.temp', '.bak', '.log', '.json', '.gz', '.LOG', '.txt', '.MTX', '.Mtx']  # Adicione outras extensões conforme necessário
+    temporary_extensions = ['.tmp', '.temp', '.bak', '.log', '.json', '.gz', '.LOG', '.txt', '.MTX', '.Mtx']  # Add other extensions as needed
 
-    cleaner = PythonCleaner(diretorios_alvo, extensoes_temporarias)
+    cleaner = PythonCleaner(target_directories, temporary_extensions)
     cleaner.welcome()
-    cleaner.limpar_arquivos_temporarios()
-    cleaner.limpar_cache_chrome()
-    cleaner.limpar_cookies_firefox()
+    cleaner.clean_temporary_files()
+    cleaner.clean_chrome_cache()
+    cleaner.clean_firefox_cookies()
 
 if __name__ == "__main__":
     main()
-
-
-
