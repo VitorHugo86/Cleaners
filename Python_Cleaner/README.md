@@ -1,6 +1,6 @@
 # Python Cleaner
 
-This is a Python script designed to clean temporary files, Google Chrome cache, and Mozilla Firefox cookies on Windows.
+This is a example of Python script designed to clean temporary files, Google Chrome cache, and Mozilla Firefox cookies on Windows.
 
 ## Installing Dependencies
 
