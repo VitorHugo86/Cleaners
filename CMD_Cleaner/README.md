@@ -18,6 +18,13 @@ This script (`cleanup_temp.bat`) is designed to help users quickly clean up temp
 
 This script is designed to work on Windows operating systems.
 
+### Web Browsers
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
+- Brave
+- Vivaldi
+
 ## Disclaimer
 
 - **Use at Your Own Risk**: While this script aims to safely delete temporary files, it's always a good idea to back up important data before running any cleanup operation.
@@ -26,7 +33,3 @@ This script is designed to work on Windows operating systems.
 ## Contributing
 
 If you encounter any issues with the script or have suggestions for improvement, feel free to open an issue or submit a pull request on this repository.
-
-## License
-
-This script is released under the [MIT License](LICENSE).
