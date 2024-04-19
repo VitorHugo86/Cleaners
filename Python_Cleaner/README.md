@@ -1,10 +1,10 @@
 # Python Cleaner
 
-Este é um script Python para limpar arquivos temporários, cache do Google Chrome e cookies do Mozilla Firefox.
+This is a Python script designed to clean temporary files, Google Chrome cache, and Mozilla Firefox cookies on Windows.
 
-## Instalação das Dependências
+## Installing Dependencies
 
-Para instalar as dependências necessárias, execute o seguinte comando:
+To install the necessary dependencies, execute the following command:
 
 ```bash
 pip install -r requirements.txt
